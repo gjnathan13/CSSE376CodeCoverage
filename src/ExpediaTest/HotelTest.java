@@ -1,5 +1,8 @@
 package ExpediaTest;
 
+import static org.junit.Assert.assertEquals;
+
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -10,6 +13,7 @@ import org.junit.Test;
 
 import Expedia.Hotel;
 import Expedia.IDatabase;
+import ExpediaTest.FlightTest.FakeDatabase;
 
 public class HotelTest
 {
@@ -20,6 +24,11 @@ public class HotelTest
 	public void TestInitialize()
 	{
 		targetHotel = new Hotel(NightsToRentHotel);
+	}
+	
+	@Test(expected=RuntimeException.class)
+	public void TestThatBadHotelInitializeThrowsException(){
+		Hotel badHotel = new Hotel(0);
 	}
 	
 	@Test
@@ -87,6 +96,38 @@ public class HotelTest
         //mocks.VerifyAll();
         EasyMock.verify(mockDB);
     }
+	
+	@Test
+	public void TestGetMilesReturnsZero()
+	{
+		Assert.assertEquals(targetHotel.getMiles(), 0);
+	}
+	
+	@Test
+	public void TestAvailableRoomsReturnsCorrectValue()
+	{
+		IDatabase fakeDatabase = new FakeDatabase();
+		ArrayList<String> roomList = new ArrayList<String>();
+		roomList.add("204");
+		roomList.add("560");
+		fakeDatabase.Rooms = roomList;
+		targetHotel.Database = fakeDatabase;
+		assertEquals(targetHotel.AvailableRooms(), roomList.size());
+	}
+	
+	public class FakeDatabase extends IDatabase{
+
+		@Override
+		public String getCarLocation(int carNumber) {
+			return null;
+		}
+
+		@Override
+		public String getRoomOccupant(int roomNumber) {
+			return null;
+		}
+		
+	}
 //    @Test
 //    public void TestThatHotelDoesGetRoomCountFromDatabase()
 //    {
