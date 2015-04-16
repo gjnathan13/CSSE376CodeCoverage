@@ -3,6 +3,7 @@ package ExpediaTest;
 import static org.junit.Assert.*;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -72,6 +73,32 @@ public class FlightTest {
 	{
 		Flight target = new Flight(new Date(2015,1,1), new Date(2015,1,6), 0);
 		Assert.assertEquals(300, target.getBasePrice(), 0.0001);
+	}
+	
+	@Test
+	public void TestNumberOfPassengersReturnsCorrectValue()
+	{
+		IDatabase fakeDatabase = new FakeDatabase();
+		ArrayList<String> passengerList = new ArrayList<String>();
+		passengerList.add("Bob");
+		passengerList.add("Sam");
+		fakeDatabase.Passengers = passengerList;
+		targetFlight.Database = fakeDatabase;
+		assertEquals(targetFlight.NumberOfPassengers(), passengerList.size());
+	}
+	
+	public class FakeDatabase extends IDatabase{
+
+		@Override
+		public String getCarLocation(int carNumber) {
+			return null;
+		}
+
+		@Override
+		public String getRoomOccupant(int roomNumber) {
+			return null;
+		}
+		
 	}
 	
 	/*@Test
