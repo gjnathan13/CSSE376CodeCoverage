@@ -69,7 +69,12 @@ public class UserTest {
 	}
 
 	@Test
-	public void TestThatUserTotalCostIsCorrect() {
+	public void TestThatUserTotalCostIsCorrect() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+		ServiceLocator serviceLocator = new ServiceLocator();
+		Field privateServiceLocator = ServiceLocator.class.getDeclaredField("_instance");
+		privateServiceLocator.setAccessible(true);
+		privateServiceLocator.set(serviceLocator, serviceLocator);
+		
 		Flight flight = new Flight(StartDate, EndDate, 500);
 		target.book(new Booking[] { flight });
 		Assert.assertEquals(flight.getBasePrice(), target.Price(), 0.01);
@@ -101,7 +106,11 @@ public class UserTest {
 	}
 
 	@Test
-	public void TestThatDiscountInitializes() {
+	public void TestThatDiscountInitializes() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+		ServiceLocator serviceLocator = new ServiceLocator();
+		Field privateServiceLocator = ServiceLocator.class.getDeclaredField("_instance");
+		privateServiceLocator.setAccessible(true);
+		privateServiceLocator.set(serviceLocator, serviceLocator);
 		Discount target = new Discount(0.01, 1);
 		ServiceLocator.Instance().AddDiscount(target);
 		this.target.book(new Booking[] { new Flight(StartDate, EndDate, 100),
@@ -110,7 +119,11 @@ public class UserTest {
 	}
 	
 	@Test
-	public void TestThatDiscountNotInitializeWithNoReducedPrice() {
+	public void TestThatDiscountNotInitializeWithNoReducedPrice() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+		ServiceLocator serviceLocator = new ServiceLocator();
+		Field privateServiceLocator = ServiceLocator.class.getDeclaredField("_instance");
+		privateServiceLocator.setAccessible(true);
+		privateServiceLocator.set(serviceLocator, serviceLocator);
 		Discount target = new Discount(0.00, 1);
 		ServiceLocator.Instance().AddDiscount(target);
 		this.target.book(new Booking[] { new Flight(StartDate, EndDate, 100),
@@ -119,7 +132,11 @@ public class UserTest {
 	}
 	
 	@Test
-	public void TestThatDiscountNotInitializeWithTooHighMilesCost() {
+	public void TestThatDiscountNotInitializeWithTooHighMilesCost() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+		ServiceLocator serviceLocator = new ServiceLocator();
+		Field privateServiceLocator = ServiceLocator.class.getDeclaredField("_instance");
+		privateServiceLocator.setAccessible(true);
+		privateServiceLocator.set(serviceLocator, serviceLocator);
 		Discount target = new Discount(0.01, 150);
 		ServiceLocator.Instance().AddDiscount(target);
 		this.target.book(new Booking[] { new Flight(StartDate, EndDate, 100),
