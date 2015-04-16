@@ -15,8 +15,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import doctorWhoGame.Gameboard;
-
 public class UserTest {
 	private User target;
 	private final Date StartDate = new Date(2009, 11, 1);
